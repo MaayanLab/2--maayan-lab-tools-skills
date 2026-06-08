@@ -1,10 +1,3 @@
-import requests
-import json
-import os
-import re
-import time
-
-BASE_URL = "https://maayanlab.cloud/speedrichr"
 import argparse
 import requests
 import json
@@ -22,57 +15,29 @@ def read_genes(path='gene_set.txt'):
 
 
 def load_libraries():
-    # Try to load from local libraries.json first
-    if os.path.exists('libraries.json'):
-        try:
-            with open('libraries.json') as lj:
-                ljd = json.load(lj)
-                if isinstance(ljd, dict) and 'libraries' in ljd:
-                    libs_from_file = [entry.get('library') for entry in ljd['libraries'] if entry.get('library')]
-                    if libs_from_file:
-                        print(f'Using {len(libs_from_file)} libraries from libraries.json')
-                        return libs_from_file
-        except Exception as e:
-            print('Failed to read libraries.json, will try remote discovery:', str(e))
 
-    # Try speedrichr API to get libraries
+    url = f"{BASE_URL}/Enrichr/datasetStatistics"
+
     try:
-        rlibs = requests.get(BASE_URL + '/speedrichr/api/libraries', timeout=30)
-        if rlibs.ok:
-            libs = rlibs.json()
-            if isinstance(libs, dict):
-                flattened = []
-                for v in libs.values():
-                    if isinstance(v, list):
-                        flattened.extend(v)
-                libs = flattened
-            if libs:
-                return libs
-    except Exception:
-        pass
+        response = requests.get(url, timeout=60)
+        response.raise_for_status()
 
-    # Fallback: scrape Enrichr landing page for library names
-    try:
-        print('Falling back to scraping Enrichr landing page for libraries...')
-        enr_page = requests.get(BASE_URL + '/Enrichr', timeout=30)
-        if enr_page.ok:
-            text = enr_page.text
-            candidates = re.findall(r"['\"]([A-Za-z0-9_\-]+)['\"]\s*:\s*\[", text)
-            candidates += re.findall(r'"([A-Za-z0-9_\-]+)"\s*:\s*\{"description"', text)
-            candidates += re.findall(r'([A-Za-z0-9_]+_[0-9]{4})', text)
-            libs = list(dict.fromkeys([c for c in candidates if len(c) > 3]))
-            if libs:
-                return libs
-    except Exception:
-        pass
+        data = response.json()
 
-    print('Could not determine library list automatically. Using reasonable fallback list.')
-    return [
-        'BioPlanet_2019', 'KEGG_2019_Human', 'WikiPathways_2019_Human',
-        'Reactome_2016', 'GO_Biological_Process_2018', 'GO_Cellular_Component_2018',
-        'GO_Molecular_Function_2018', 'ChEA_2016', 'TRANSFAC_and_JASPAR_PWMs',
-        'ENCODE_and_ChEA_Consensus_TFs_from_ChIP-X', 'DSigDB', 'MSigDB_Hallmark_2020'
-    ]
+        if "statistics" not in data:
+            raise ValueError("Unexpected response format")
+
+        libraries = [
+            entry["libraryName"]
+            for entry in data["statistics"]
+            if "libraryName" in entry
+        ]
+
+        return libraries
+
+    except Exception as e:
+        print(f"Failed to load libraries from Enrichr: {e}")
+        return []
 
 
 def enrich_no_background(genes, libs, limit=None):
