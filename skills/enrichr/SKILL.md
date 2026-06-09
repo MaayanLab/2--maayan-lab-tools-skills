@@ -11,16 +11,15 @@ metadata:
 
 ## Overview
 
-Enrichr is Ma'ayan Lab's enrichment analysis tool that uses a set of Entrez gene symbols as input and EDIT !!! returns the significance of the gene set based on different score methods. Can be performed with or without background.
-
-Each gene set within Enrichr is associated with a functional term or an enrichment term. Returns a ranked set of terms for each gene set library along with their scores.
+Enrichr is Ma'ayan Lab's enrichment analysis tool that uses a set of Entrez gene symbols as input and returns a ranked set of terms for each gene set library along with their scores. Can be performed with or without background. Each gene set within Enrichr is associated with a functional term or an enrichment term.
 
 
 ## When to Use This Skill
 
-Use this skill when: !!! EDIT !!!
-- figuring out if input gene set significantly overlaps with annotated gene set 
-- performing enrichment analysis with or with background
+Use this skill when:
+- figuring out if input gene set is over-represented (enrichment analysis) with or without background
+- searching libary database for all gene sets containing specific term
+- searching library database for terms containing specific gene
 - expanding a gene, term, or variant into a gene set to use for analysis
 
 ## Outputs
