@@ -1,7 +1,7 @@
 ---
 name: Enrichr
 description: >
-  Gene-list enrichment analysis tool. Use for checking if input set of genes significantly overlaps with annotated gene sets, providing users with interactive displays and visualizations.
+  Gene-list enrichment analysis tool. Use for checking if input set of genes significantly overlaps with annotated gene sets, returning most over-represented gene sets from library databases.
 license: CC-BY-NC-SA-4.0
 metadata:
   version: 2.0.0
@@ -11,10 +11,10 @@ metadata:
 
 ## Overview
 
-Enrichr is Ma'ayan Lab's enrichment analysis tool that uses a set of Entrez gene symbols as input and returns the significance of the gene set based on different score methods. Can be performed with or without background.
+Enrichr is Ma'ayan Lab's enrichment analysis tool that uses a set of Entrez gene symbols as input and EDIT !!! returns the significance of the gene set based on different score methods. Can be performed with or without background.
 
-Each gene set within Enrichr is associated with a functional term or an enrichment term. 
-Outputs are ranked sets of terms, one set for each gene set library, where highest ranked enrichment terms provide knowledge about input set.
+Each gene set within Enrichr is associated with a functional term or an enrichment term. Returns a ranked set of terms for each gene set library along with their scores.
+
 
 ## When to Use This Skill
 
@@ -376,7 +376,7 @@ if res.ok:
 }
 ```
 
-### 5. Find Terms that Contain a Given Gene
+### 5. Find Terms that Contain a Given Gene (Gene Search)
 
 **Parameters**
 - **gene** to use in search for terms
@@ -390,7 +390,6 @@ if res.ok:
 ```python
 import json
 import requests
-
 
 ENRICHR_URL = 'https://maayanlab.cloud/Enrichr/genemap'
 query_string = '?json=true&setup=true&gene=%s'
@@ -445,10 +444,62 @@ print(data)
 }
 ```
 
-### 7. Term Search
+### 6. Term Search
 
+**Parameters**
+- **term** to use in search for
+- **json** (optional) :	Set "true" to return JSON rather plaintext
 
-### 6. Download File of Enrichment Results
+**Returns**
+- all gene sets that are related to the input term
+
+**Example code**
+```python
+import json
+import requests
+
+ENRICHR_URL = 'https://maayanlab.cloud/Enrichr/termmap'
+query_string = '?json=%s&meta=%s'
+option = 'true'
+
+term = "breast%20cancer"
+
+response = requests.get(ENRICHR_URL + query_string % (option, term)
+    )
+
+if not response.ok:
+    raise Exception('Error fetching enrichment results')
+
+data = json.loads(response.text)
+print(data)
+```
+
+**Example results**
+```python
+{
+  "terms": {
+    "DisGeNET": [
+      "bilateral breast cancer",
+      "Intermediate Grade Ductal Breast Carcinoma In Situ",
+      "Sporadic Breast Carcinoma",
+      "Contralateral breast cancer",
+      "Unilateral Breast Carcinoma",
+      "Unilateral Breast Neoplasms",
+      "Stage 0 Breast Carcinoma",
+      "Adenoid cystic breast carcinoma",
+      "Carcinoma breast stage IV",
+      "Columnar Cell Change of the Breast",
+      "Columnar Cell Hyperplasia of the Breast",
+      "Stage III Breast Cancer AJCC v6",
+      "Stage III Breast Cancer AJCC v7",
+      ...
+      ]
+  }
+}
+
+```
+
+### 7. Download File of Enrichment Results
 
 **Parameters**
 - ID from Gene Set Analysis (userListId)
