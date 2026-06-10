@@ -459,8 +459,8 @@ import requests
 
 ENRICHR_URL = 'https://maayanlab.cloud/Enrichr/termmap'
 query_string = '?json=%s&meta=%s'
-option = 'true'
 
+option = 'true'
 term = "breast%20cancer"
 
 response = requests.get(ENRICHR_URL + query_string % (option, term)
@@ -498,7 +498,142 @@ print(data)
 
 ```
 
-### 7. Download File of Enrichment Results
+### 7. Expanding Gene/Term/Variant into Gene Set
+
+Search results for Gene/Term/Variant using variety of gene-gene co-mentions/co-expressions matrix from different libraries/literature by identifying top 100 genes that most co-mention/co-express with input
+
+```python
+import json
+import requests 
+
+ENRICHR_URL = "https://maayanlab.cloud/enrichrsearch/term/expand"
+
+response = requests.get(ENRICHR_URL,
+    params={
+        "search": "breast%20cancer",
+        "rif": "generif",
+        "top": 100
+    }
+)
+
+if not response.ok:
+    raise Exception('Error fetching enrichment results')
+
+data = json.loads(response.text)
+print(data)
+```
+
+**Example results**
+
+```python
+{
+  "success": true,
+  "data": [
+    "ABCB1",
+    "ABCG2",
+    "AHR",
+    "AKT1",
+    "AR",
+    "ATM",
+    "AURKA",
+    "BARD1",
+    "BCL2",
+    "BIRC5",
+    "BRCA1",
+    "BRCA2",
+    "BRIP1",
+    "CASP8",
+    "CAV1",
+    "CCND1",
+    "CD274",
+    "CD44",
+    "CDH1",
+    "CDKN1A",
+    "CDKN1B",
+    "CDKN2A",
+    "CHEK2",
+    "COMT",
+    "CTNNB1",
+    "CXCL12",
+    "CXCL8",
+    "CXCR4",
+    "CYP17A1",
+    "CYP19A1",
+    "CYP1A1",
+    "CYP1B1",
+    "CYP2D6",
+    "E2F1",
+    "EGFR",
+    "ELOVL2",
+    "ERBB2",
+    "ERBB3",
+    "ERCC2",
+    "ESR1",
+    "ESR2",
+    "EZH2",
+    "FGFR2",
+    "GATA3",
+    "GPER1",
+    "GSTM1",
+    "GSTP1",
+    "GSTT1",
+    "HIF1A",
+    "IGF1",
+    "IGF1R",
+    "IGFBP3",
+    "IL6",
+    "ITGB1",
+    "LENG1",
+    "LEP",
+    "MAPK1",
+    "MDM2",
+    "MIR21",
+    "MKI67",
+    "MMP2",
+    "MMP9",
+    "MTHFR",
+    "MTOR",
+    "MUC1",
+    "MYC",
+    "NBN",
+    "NCOA3",
+    "NFKB1",
+    "NOTCH1",
+    "PALB2",
+    "PARP1",
+    "PGR",
+    "PIK3CA",
+    "PPARG",
+    "PTEN",
+    "PTGS2",
+    "PTK2",
+    "RAD51",
+    "RASSF1",
+    "RB1",
+    "RHOA",
+    "SERPINB5",
+    "SIRT1",
+    "SNAI1",
+    "SOD2",
+    "SPP1",
+    "SRC",
+    "STAT3",
+    "TERT",
+    "TGFB1",
+    "TNF",
+    "TP53",
+    "TP63",
+    "TWIST1",
+    "VDR",
+    "VEGFA",
+    "XRCC1",
+    "XRCC3",
+    "YAP1"
+  ]
+}
+```
+
+### 8. Download File of Enrichment Results
 
 **Parameters**
 - ID from Gene Set Analysis (userListId)
