@@ -1,8 +1,7 @@
 ---
 name: Perturb-Seqr
 description: >
-    Connectivity Mapping search engine and database. Used for single gene set search, up and down gene set search, and term search.
-license:
+    Comprehensive Connectivity Mapping search engine and database. Used for single gene set search, up and down gene set search, and term search.
 ---
 
 # Perturb-Seqr
@@ -14,42 +13,26 @@ Perturb-Seqr is a comprehensive Connectivity Mapping search engine and database 
 
 All data is accessible via a GraphQL API.
 
-
-
-
-
 ## When to Use This Skill
+- computing gene sets against datasets from comprehensive Connectivity Map database
+- identify drugs and gene perturbations with similar or opposite expression signatures
+- analyze relationships between gene signatures and perturbations across multiple connectivity mapping resources
+- retrieving metadata of gene sets
 
 ## Core Capabilities
 
 Perturb-Seqr uses GraphQL API for 3 main query modes.
 
 1. up and down gene set search
-- search Perturb-Seqr database for gene set pairs that most significantly (Fisher's exact test) mimic or reverse the expression of input gene set
+    - search Perturb-Seqr database for gene set pairs that most significantly (Fisher's exact test) mimic or reverse the expression of input gene set
 
 2. single gene set search
-- returns any significantly overlapping gene sets determined with Fisher's exact test
+    - returns any significantly overlapping gene sets determined with Fisher's exact test
 
 3. term search
-- 
-
-term search
-Perturb-Seqr also provides direct metadata search of all dataset gene sets. Paginated results are returned with accompanying metadata of the returned gene sets:
-
+    - direct metadata search of all dataset gene sets
 
 In example Python code below, requests and pandas should be installed for all.
-
-
-
-The up and down gene set search functionality enables users to search the Perturb-Seqr database for gene set pairs that most significantly mimic or reverse the expression of the submitted up and down gene sets. A Fisher's exact test is also used to assess the significance of these results, specifically measuring a mimicker overlap (up Perturb-Seqr gene set & up user gene set + down Perturb-Seqr gene set & down user gene set) and reverser overlap (up Perturb-Seqr gene set & down user gene set + down Perturb-Seqr gene set & up user gene set). Any significantly overlapping mimicker or reverser gene set is returned to the user along with their accompanying metadata. User query gene sets can be pasted or typed into the two input boxes with each gene on a new line, or the user may upload a file containing genes where the genes are listed with new line, tab, or comma separators:
-
-
-
-
-
-
-
-
 
 **1. Single gene set enrichment**
 
@@ -359,10 +342,10 @@ def get_perturbseqr_valid_genes(genes: list[str]):
     return [g['geneInfo']['symbol'] for g in res['data']['geneMap2']['nodes'] if g['geneInfo'] != None]
 ```
 
-
-
 ## Additional Resources
-
+- Perturb-Seqr Documentation: https://perturbseqr.maayanlab.cloud/help
+- Requests library: https://pypi.org/project/requests/
+- Pandas library: https://pandas.pydata.org/docs/user_guide/index.html#user-guide
 
 ## Citations
 John K. Gardner, Lily D. Taub, Daniel J. B. Clarke, Ido Diamant, Avi Ma'ayan. Perturb-Seqr: Comprehensive Signature Search Engine Integrating Connectivity Maps from Multiple Sources. https://perturbseqr.maayanlab.cloud/
