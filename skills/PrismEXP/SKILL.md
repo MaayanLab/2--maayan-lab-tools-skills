@@ -59,8 +59,10 @@ print(results)
 
 
 ## Additional Resources
-PrismEXP Python package: https://github.com/maayanlab/prismexp
-PrismEXP website: https://maayanlab.cloud/prismexp/help
+- PrismEXP Python package: https://github.com/maayanlab/prismexp
+- PrismEXP website: https://maayanlab.cloud/prismexp/help
+- Requests library: https://pypi.org/project/requests/
+
 
 ## Citations
 Lachmann A, Rizzo KA, Bartal A, Jeon M, Clarke DJB, Ma’ayan A. 2023. PrismEXP: gene annotation prediction from stratified gene-gene co-expression matrices. PeerJ 11:e14927 https://doi.org/10.7717/peerj.14927
