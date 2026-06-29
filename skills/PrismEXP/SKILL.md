@@ -1,7 +1,7 @@
 ---
 name: PrismEXP
 description: >
-  .
+  Gene anotation prediction tool. Used for predicting biological annotations, pathways, and functional associations for input gene through trained machine learning models.
 license: Apache-2.0 license (software)
 ---
 
@@ -15,8 +15,6 @@ PrismEXP leverages large-scale gene expression datasets by clustering samples in
 
 Users input a human gene symbol and receive predicted biological annotations from gene set libraries, along with known annotations for comparison. Based on gene-gene co-expression matrices from ARCHS4 and selected gene set libraries from Enrichr.
 
-PrismEXP is available as a Python package, through Appyters, and through its website.
-
 ## When to Use This Skill
 
 * predicting biological functions and pathway annotations for human genes
@@ -25,7 +23,6 @@ PrismEXP is available as a Python package, through Appyters, and through its web
 * identifying regulatory, pathway, phenotype, and ontology associations
 * prioritizing functional hypotheses from large-scale gene expression data
 * exploring gene-gene relationships and extending gene sets
-
 
 ## Core Capabilities
 
@@ -61,21 +58,11 @@ print(results)
 ```
 
 
-
-Context-Specific Co-expression Modeling
-Leverages multiple gene-gene co-expression matrices derived from clustered ARCHS4 RNA-seq data to capture tissue- and cell-type-specific relationships.
-
-Machine Learning Ranking
-Uses a LightGBM model to combine co-expression features and rank candidate gene annotations.
-
-Hypothesis Generation for Understudied Genes
-Predict functions and biological associations for poorly characterized genes, including non-coding genes and splice variants.
-
-
-
 ## Additional Resources
-PrismEXP Python package: https://github.com/maayanlab/prismexp
-PrismEXP website: https://maayanlab.cloud/prismexp/help
+- PrismEXP Python package: https://github.com/maayanlab/prismexp
+- PrismEXP website: https://maayanlab.cloud/prismexp/help
+- Requests library: https://pypi.org/project/requests/
+
 
 ## Citations
 Lachmann A, Rizzo KA, Bartal A, Jeon M, Clarke DJB, Ma’ayan A. 2023. PrismEXP: gene annotation prediction from stratified gene-gene co-expression matrices. PeerJ 11:e14927 https://doi.org/10.7717/peerj.14927
