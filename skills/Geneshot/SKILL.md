@@ -1,7 +1,7 @@
 ---
 name: Geneshot
 description: >
-  .
+  Gene search engine and association tool. Used for retrieving list of genes ranked on previously published associations and list of genes ranked on predicted associations.
 license: Apache-2.0 (software)
 ---
 
@@ -9,11 +9,23 @@ license: Apache-2.0 (software)
 
 ## Overview
 
-
+Geneshot is a text-to-gene association and prediction engine that maps arbitrary biological or disease-related search terms to ranked gene lists. Designed to cover both well-studied and under-studied gene–term associations by integrating literature mining, curated gene–publication databases, and large-scale omics-derived similarity networks.
 
 ## When to Use This Skill
 
+- map free-text biomedical concepts, or a disease, drug, or biological process, to associated genes
+- find hidden or under-studied gene associations
+- augment a gene set with data-driven predictions
+- identify candidate genes for a disease, phenotype, or pathway
+
 ## Core Capabilities
+
+1. find genes associated with search term
+2. retrieve publication counts for genes matching search term
+3. predict associated genes (using gene-gene similarity)
+4. predict gene function
+
+When cross-referencing PubMed IDs to rank genes based on frequency of associations, users can choose a rif: GeneRIF or an expanded version called AutoRIF. Geneshot utilizes the following gene-gene similarity matrices to predict known gene-term associations: ARCHS4 RNA-seq co-expression, Tagger co-occurrence, and AutoRIF co-mentions, GeneRIF co-mentions, and Enrichr co-occurrence.
 
 ### 1. Retrieve PubMed IDs associated with gene
 
