@@ -57,6 +57,7 @@ results = response.json()
 print(results)
 ```
 
+Please note PrismEXP API will return a webpage, not a JSON API.
 
 ## Additional Resources
 - PrismEXP Python package: https://github.com/maayanlab/prismexp
