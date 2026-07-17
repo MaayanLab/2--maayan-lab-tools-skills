@@ -97,7 +97,7 @@ print(data)
 
 ### 3. Get enrichment results
 
-DESC
+Retrieves the following: Rank, Term name, P-value, Z-score, Combined score, Overlapping drugs, Adjusted p-value, Old p-value, Old adjusted p-value. Please note that response rows contain 9 columns and that a mismatch in the number of columns may cause parsing issues.
 
 **Parameters:**
 - userListId (identifier returned from addList endpoint)
@@ -243,6 +243,40 @@ with open(filename + '.txt', 'wb') as f:
         if chunk:
             f.write(chunk)
 ```
+
+## Available Drug-set Libraries
+
+Below are a list of the available drug-set libraries DrugEnrichr has access to:
+
+- ATC
+- CREEDS_Signature_Down
+- CREEDS_Signature_Up	
+- Drug_Repurposing_Hub_Mechanism_of_Action
+- Drug_Repurposing_Hub_Target	
+- DrugCentral_Target
+- Geneshot_Associated	
+- Geneshot_Predicted_Enrichr
+- Geneshot_Predicted_from_AutoRIF	
+- Geneshot_Predicted_from_Co-expression
+- Geneshot_Predicted_GeneRIF	
+- Geneshot_Predicted_Tagger
+- KinomeScan_Kinase
+- L1000FWD_GO_Biological_Processes_Down
+- L1000FWD_GO_Biological_Processes_Up	
+- L1000FWD_GO_Cellular_Component_Down		
+- L1000FWD_GO_Cellular_Component_Up	
+- L1000FWD_GO_Molecular_Function_Down	
+- L1000FWD_GO_Molecular_Function_Up	
+- L1000FWD_KEGG_Pathways_Down	
+- L1000FWD_KEGG_Pathways_Up	
+- L1000FWD_Predicted_Side_Effects	
+- L1000FWD_Signature_Down	
+- L1000FWD_Signature_Up	
+- PharmGKB_OFFSIDES_Side_Effects	
+- PharmGKB_SNV
+- SIDER_Indications
+- SIDER_Side_Effects
+- STITCH_Target
 
 ## Additional Resources
 DrugEnrichr background information: https://maayanlab.cloud/DrugEnrichr/help#background

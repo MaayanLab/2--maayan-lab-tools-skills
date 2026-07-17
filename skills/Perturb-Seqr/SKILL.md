@@ -100,6 +100,9 @@ def enrich_perturbseqr_single_set(geneset: list, first=1000, library_names=None)
                                     count
                                 }
                                 }
+                                library {
+                                name
+                                }
                             }
                             totalCount
                             }
@@ -122,6 +125,7 @@ def enrich_perturbseqr_single_set(geneset: list, first=1000, library_names=None)
                             pvalueDown
                             adjPvalueDown
                             oddsRatioDown
+                            libraries
                         }
                         }
                     }
@@ -148,6 +152,7 @@ def enrich_perturbseqr_single_set(geneset: list, first=1000, library_names=None)
     df_enrichment["count"] = df_enrichment["geneSetFdaCountsById.nodes"].map(lambda x: x[0]['count'] if len(x) > 0 else 0)
     df_enrichment.drop(columns=['geneSetFdaCountsById.nodes'], inplace=True)
     df_enrichment['direction'] = df_enrichment["term"].map(lambda t: t.split(' ')[-1])
+    df_enrichment = df_enrichment.rename(columns={'library.name': 'library'})
 
     return df_enrichment, df_consensus
 ```
@@ -203,6 +208,7 @@ def enrich_perturbseqr_up_down(genes_up: list[str], genes_down: list[str], first
               pvalueDown
               adjPvalueDown
               oddsRatioDown
+              libraries
               }
               nodes {
                 adjPvalueMimic
@@ -223,6 +229,9 @@ def enrich_perturbseqr_up_down(genes_up: list[str], genes_down: list[str], first
                         count
                         approved
                         }
+                      }
+                    library {
+                      name
                       }
                     }
                   }
@@ -256,6 +265,7 @@ def enrich_perturbseqr_up_down(genes_up: list[str], genes_down: list[str], first
   df_enrichment_pair['count'] = df_enrichment_pair['geneSet'].map(lambda t: t['nodes'][0]['geneSetFdaCountsById']['nodes'][0]['count'])
   df_enrichment_pair['nGeneIdsUp'] = df_enrichment_pair['geneSet'].map(lambda t: t['nodes'][0]['nGeneIds'])
   df_enrichment_pair['nGeneIdsDown'] = df_enrichment_pair['geneSet'].map(lambda t: t['nodes'][0]['nGeneIds'])
+  df_enrichment_pair['library'] = df_enrichment_pair['geneSet'].map(lambda t: t['nodes'][0]['library']['name'])
   df_enrichment_pair["geneSetIdUp"] = df_enrichment_pair["geneSet"].map(
       lambda t: next((node['id'] for node in t['nodes'] if ' up' in node['term']), None)
   )
@@ -340,6 +350,66 @@ def get_perturbseqr_valid_genes(genes: list[str]):
     response.raise_for_status()
     res = response.json()
     return [g['geneInfo']['symbol'] for g in res['data']['geneMap2']['nodes'] if g['geneInfo'] != None]
+```
+
+## Best Practices for Error Handling
+1. **Choosing between enrichment and consensus:** please note that consensus indicates consensus perturbations, which will compute significant compounds and gene perturbations using the Fisher's exact test, taking into account the number of significant and insignificant gene sets corresponding to that perturbation. Consensus differs from enrichment in that consensus performs another Fisher's exact test to see if a signature is repeated across many datasets. In other words, consensus focuses on robust perturbations rather than isolated experiments. Enrichment simply finds individual perturbation signatures that significantly overlap with the input gene set. For best practice, offer the user the option to choose between either and default to enrichment.
+
+2. **Parsing between drugs and genes:** please note that enrichment and consensus contain both drugs and genes, even when the term names are labeled otherwise. Enrichment drug/gene names will be under the section "term" and are the first characters in the group of information separated by ":". For consensus, both gene and drug names are listed under "drug." Therefore, to parse between the two, do not rely on ``filter_ko``, and instead refer to the libraries list below to see which datasets belong to drugs and which belongs to genes:
+
+    **Drug/Chemical Perturbation Datasets:**
+
+    - LINCS L1000 Chemical Perturbations (L2S2)
+    - Tahoe-100M (Hugging Face)
+    - NIBR DRUG-seq U2OS MoABox Dataset (Harmonizome)
+    - Microarrays CMAP Build 02 (Harmonizome)
+    - Ginkgo Bioworks (Hugging Face)
+    - SciPlex Drug Perturbations (Harmonizome)
+    - DeepCover MoA (Harmonizome)
+    - CREEDS Drug Perturbations (CREEDS)
+    - RummaGEO Drug Perturbations (Harmonizome)
+
+    **Gene Perturbation Datasets:**
+
+    - Perturb Atlas Human Gene Perturbations (Harmonizome)
+    - Perturb Atlas Mouse Gene Perturbations (Harmonizome)
+    - LINCS L1000 Gene Knockouts (L2S2)
+    - Replogle Perturb-seq K562 Genome-wide (Harmonizome)
+    - Replogle Perturb-seq RPE1 Essential (Harmonizome)
+    - Replogle Perturb-seq K562 Essential (Harmonizome)
+    - CREEDS Gene Perturbations (CREEDS)
+    - Bridge2AI CM4AI (Perturb-seq)
+    - RummaGEO Gene Perturbations (Harmonizome)
+
+3. **Parsing term names for enrichment:** Perturb-Seqr's gene-set "term" strings pack the perturbation name together with metadata (cell line, tissue, dose, KO/KD/Mut label, dataset ID, gene set size, etc.), all separated by "::", e.g.:
+
+    - "glucagon::::::::::human::GSE171352::2::3 down"
+    - "TP53::CAL51::::::::KO::::SRP287851::2996 down"
+    - "doxorubicin::::human dermal fibroblast::24h::0.3uM"
+
+    Note that the perturbation name is always the **first** "::"-delimited field and everything after is metadata. The direction ("up"/"down"), when present, is the last whitespace-separated token of the **last** "::" field. Not every term has a direction.
+
+    For how to best parse term names, refer to parsing function below:
+
+```python
+def parse_perturbation_term(term):
+    """
+    Examples:
+        >>> parse_perturbation_term("TP53::CAL51::::::::KO::::SRP287851::2996 down")
+        ('TP53', 'down')
+        >>> parse_perturbation_term("glucagon::::::::::human::GSE171352::2::3 down")
+        ('glucagon', 'down')
+        >>> parse_perturbation_term("doxorubicin::::human dermal fibroblast::24h::0.3uM")
+        ('doxorubicin', None)
+        >>> parse_perturbation_term("TP53::SUP-T1::::::::KO::::SRP999::111 up")
+        ('TP53', 'up')
+    """
+    fields = term.split("::")
+    perturbation = fields[0].strip()
+    last_field = fields[-1].strip() if fields else ""
+    tokens = last_field.split(" ")
+    direction = tokens[-1].lower() if len(tokens) > 1 and tokens[-1].lower() in ("up", "down") else None
+    return perturbation, direction
 ```
 
 ## Additional Resources
