@@ -353,6 +353,9 @@ results = response.json()
 print(results)
 ```
 
+## Best Practices
+1. **Capitalize all letters of input genes** when querying ARCHS4. For example: instead of "c9orf72" use "C9ORF72". This prevents issues with retrieving outputs.
+
 ## Additional Resources
 - ARCHS4 use in Python (archs4py) documentation: https://github.com/MaayanLab/archs4py
 - Requests library documentation: https://pypi.org/project/requests/
