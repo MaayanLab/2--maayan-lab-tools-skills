@@ -412,6 +412,9 @@ def parse_perturbation_term(term):
     return perturbation, direction
 ```
 
+3. **Raise TopN to 10000 to include smaller libraries.** Smaller libraries, like SciPlex, may have mimickers/reversers which are statistically significant, but not counted due to being outcrowded by a bigger library with more extreme p-values. Perturb-Seqr paired enrichment query has no per-library filter, so to make sure smaller libraries have enough room to surface, ensure TopN is a large enough value. Setting TopN = 10000 is generally a good value to make sure smaller libraries have enough room to surface. If the server's total count exceeds what is returned, TopN may need to be raised even higher. Including statistically significant results for smaller libraries is useful when graphing results by libraries.
+
+
 ## Additional Resources
 - Perturb-Seqr Documentation: https://perturbseqr.maayanlab.cloud/help
 - Requests library: https://pypi.org/project/requests/
