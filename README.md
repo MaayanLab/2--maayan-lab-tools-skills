@@ -6,7 +6,7 @@ A collection Ma'ayan Lab's bioinformatics tools as skills for any AI agent that 
 
 ## Included Tools
 
-As of now, this working list contains 12 skills, each one including:
+As of now, this working list contains 14 skills, each one including:
 - Documentation (``SKILL.md``)
 - Example code and results
 - Usage guides and descriptions
@@ -26,8 +26,6 @@ Ma'ayan Lab's enrichment analysis tools identify statistically significant overl
 - **Rummagene:** Rummagene provides access to human and mouse gene sets extracted from (as of now) 6,327,912 PubMed Central articles, finding 147,611 articles that contain 793,703 gene sets. Rummagene uses these gene sets for enrichment analysis, free text and table title search and will find matching gene sets ranked by their overlap with your input gene set. This tool can also be used for transcription factor and kinase enrichment analyses, for universal predictions of cell types for single cell RNA-seq data, and for gene function predictions. Combining gene set similarity with abstract similarity, Rummagene can discover surprising relationships between biological processes, concepts, and named entities.
     - [Website](https://rummagene.com/) and [publication](https://www.nature.com/articles/s42003-024-06177-7).
 
-**Example use cases:**
-- INSERT EXAMPLE QUERIES
 
 ### Drug and Target Discovery
 
@@ -36,8 +34,6 @@ Drug and target discovery tools rank drugs and targets by using published Connec
 - **SigCom-LINCS:** SigCom LINCS serves over a million gene expression signatures processed, analyzed, and visualized from LINCS, GTEx, and GEO. Using a single gene, a gene set, sets of up and down genes, or any search term, SigCom LINCS can provide rapid signature similarity searches for mimickers and reversers, along with offering a metadata search function that finds and analyzes subsets of signatures and information about genes and drugs. SigCom LINCS is findable, accessible, interoperable, and reusable (FAIR) with metadata linked to standard ontologies and vocabularies.
     - [Website](https://maayanlab.cloud/sigcom-lincs/#/SignatureSearch/UpDown) and [publication](https://academic.oup.com/nar/article/50/W1/W697/6582159?login=true).
 
-**Example use cases:**
-- INSERT EXAMPLE QUERIES
 
 ### Gene and Drug Pages
 
@@ -52,8 +48,6 @@ These tools serve as centralized spaces for detailed information on genes, prote
 - **Geneshot:** Geneshot allows you to enter arbitrary search terms to receive ranked list of relevant genes containing genes previously published in association with the search term, as well as genes predicted to be associated with the search term based on data integration from multiple sources.
     - [Website](https://maayanlab.cloud/geneshot/) and [publication](https://academic.oup.com/nar/article/47/W1/W571/5494749?login=true).
 
-**Example use cases:**
-- INSERT EXAMPLE QUERIES
 
 ### Data Portals
 
@@ -62,8 +56,6 @@ Ma'ayan Lab's NIH-funded data and information portals integrate, standardize, an
 - **Harmonizome:** Harmonizome is a biological knowledge engine built on top of information about genes and proteins from 114 datasets and contains attribute tables on genes, proteins, cell lines, tissues, experimental perturbations, diseases, phenotypes, or drugs, depending on the dataset. Gene-gene and attribute-attribute similarity networks are computed from attribute tables and can be integrated to perform various computational analyses for knowledge discovery and hypothesis generation.
     - [Website](https://maayanlab.cloud/Harmonizome/) and [publication](https://academic.oup.com/database/article/doi/10.1093/database/baw100/2630482)
 
-**Example use cases:**
-- INSERT EXAMPLE QUERIES
 
 ### Miscellaneous
 
@@ -74,5 +66,7 @@ Collection of useful bioinformatics tools with features including assembling and
 - **Perturb-Seqr:** Using up and down gene sets, Perturb-Seqr can identify small molecules and gene perturbations that produce the most similar or opposite effect on gene expression. Perturb-Seqr contains over 425,000 sets of up- and down-regulated genes measuring the effects of over 8,500 unique drugs, and over 12,000 unique gene perturbations, targeting approximately 1,000 unique cell lines, and various cell types and tissues, all gathered from processed data from Bridge2AI CM4AI (Perturb-seq), LINCS (L1000), Tahoe-100M, NIBR (DRUG-seq), the original CMap (cDNA microarrays), Ginkgo Bioworks (DRUG-seq), SciPlex, DeepCover MoA (Proteomics), Perturb Atlas (Perturb-seq), Replogle et al. (Perturb-seq), CREEDS (cDNA microarrays), and RummaGEO (RNA-seq). The 12 Connectivity Mapping resources are organized into 16 gene set libraries, 9 drug perturbation and 7 gene perturbation followed by expression.
     - [Website](https://perturbseqr.maayanlab.cloud/)
 
-**Example use cases:**
-- INSERT EXAMPLE QUERIES
+
+## Example Use Cases
+
+Example use cases can be found in ``test_case_examples``. Files are split between Appyters and notebooks. Some files may be found in both if an Appyters and notebooks version exists.
