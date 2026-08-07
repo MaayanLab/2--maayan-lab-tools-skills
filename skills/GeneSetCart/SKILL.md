@@ -33,6 +33,8 @@ Generate Venn diagrams, UpSet plots, SuperVenn diagrams, heatmaps, and UMAP visu
 Expand gene sets using gene co-expression or protein-protein interaction networks.
 
 
+
+
 GeneSetCart is an interactive web-based application that enables users to fetch gene sets from various Common Fund programs data sources, augment these sets with gene-gene co-expression correlations or protein-protein interactions, perform set operations such as union, consensus, and intersection on multiple sets, visualize and analyze these gene sets in a single session
 
 GeneSetCart provides access to CFDE generated gene sets through a term query interface that returns gene sets related to all biomedical terms sourced from most CFDE DCCs. GeneSetCart also supports the upload of single and multiple user-generated gene sets. Users of GeneSetCart can also obtain gene sets by searching PubMed for genes co-mentioned with any term in publications. 
@@ -117,10 +119,10 @@ response = requests.post(
 print(response.json())
 ```
 
-### Assembling EDIT !!!
-
 
 ## Additional Resources
+- GeneSetCart website: https://genesetcart.cfde.cloud/about
+- Requests library documentation: https://pypi.org/project/requests/
 
 ## Citations
 Marino GB, Olaiya S, Evangelista JE, Clarke DJB, Ma'ayan A. GeneSetCart: assembling, augmenting, combining, visualizing, and analyzing gene sets. Gigascience. 2025 Jan 6;14:giaf025. doi: 10.1093/gigascience/giaf025.

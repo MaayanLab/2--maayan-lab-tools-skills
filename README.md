@@ -6,7 +6,7 @@ A collection Ma'ayan Lab's bioinformatics tools as skills for any AI agent that 
 
 ## Included Tools
 
-As of now, this working list contains 12 skills, each one including:
+As of now, this working list contains 13 skills, each one including:
 - Documentation (``SKILL.md``)
 - Example code and results
 - Usage guides and descriptions
