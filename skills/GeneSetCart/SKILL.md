@@ -1,7 +1,7 @@
 ---
 name: GeneSetCart
 description: >
-  Gene set assembly and analysis workspace.
+  Gene set assembly and analysis workspace. Used for managing gene sets from Common Fund Data Ecosystem (CFDE) resources and user-inputted gene lists. Also provides visualizations, gene set operations, and gene set augmentation.
 license: GPL-3.0
 ---
 
@@ -33,17 +33,19 @@ Generate Venn diagrams, UpSet plots, SuperVenn diagrams, heatmaps, and UMAP visu
 Expand gene sets using gene co-expression or protein-protein interaction networks.
 
 
-
-
-GeneSetCart is an interactive web-based application that enables users to fetch gene sets from various Common Fund programs data sources, augment these sets with gene-gene co-expression correlations or protein-protein interactions, perform set operations such as union, consensus, and intersection on multiple sets, visualize and analyze these gene sets in a single session
-
-GeneSetCart provides access to CFDE generated gene sets through a term query interface that returns gene sets related to all biomedical terms sourced from most CFDE DCCs. GeneSetCart also supports the upload of single and multiple user-generated gene sets. Users of GeneSetCart can also obtain gene sets by searching PubMed for genes co-mentioned with any term in publications. 
-
-
-
 ## When to Use This Skill
 
+- searching CFDE gene set libraries by biomedical concepts or disease terms
+- assembling gene sets from multiple experimental and computational sources
+- augmenting gene sets or performing gene set operations
+- comparing gene sets with overlap and similarity visualizations
+- exporting gene sets for downstream enrichment and signature analysis
+- saving and sharing gene set collections for reproducible analyses
+
+
 ## Core Capabilities
+
+Below are the available APIs and example codes for Gene Set Cart.
 
 ### Uploading gene sets
 
